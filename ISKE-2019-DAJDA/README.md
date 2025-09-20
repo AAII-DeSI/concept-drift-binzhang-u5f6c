@@ -1,11 +1,11 @@
 # Drift Adaptation via Joint Distribution Alignment
 
-Source code of [Drift Adaptation via Joint Distribution Alignment (DAJDA)](https://ieeexplore.ieee.org/document/9170335).
+Source code of [Drift Adaptation via Joint Distribution Alignment](https://ieeexplore.ieee.org/document/9170335).
 
 ## Dependencies
 
 Install the dependecies via
-```python
+```bash
 pip install -r requirements.txt
 ```
 
