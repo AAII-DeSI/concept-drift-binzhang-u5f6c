@@ -10,6 +10,7 @@ The only dependencies are [NumPy](https://numpy.org/),
 ## Usage
 
 The `StreamHandler` class should be initialized with a base learner.
+There are three methods, `fit`, `partial_fit` and `score`.
 
 **Example**
 

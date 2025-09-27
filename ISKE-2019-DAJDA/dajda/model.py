@@ -5,7 +5,7 @@ import scipy.linalg
 
 
 class DAJDA:
-    """DAJDA class."""
+    """DAJDA model."""
 
     def __init__(self, clf, mu=0.5, lamb=1):
         """Initialize a model."""

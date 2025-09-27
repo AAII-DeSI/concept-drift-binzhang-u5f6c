@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Stream handlers."""
+"""FuzzMDX Stream handlers."""
 import numpy as np
 from scipy.stats import mannwhitneyu
 import torch
@@ -20,7 +20,7 @@ class SMF:
     """sigmoid membership function."""
 
     def __init__(self):
-        """__init__ method."""
+        """Initialize a membership function."""
         self.func = nn.Sequential(nn.Linear(1, 1, dtype=torch.float64),
                                   nn.Sigmoid())
         self.optimizer = torch.optim.SGD(self.func.parameters(), lr=1e-2)
@@ -68,13 +68,13 @@ class StreamHandler:
     """Handle a stream in dynamic environment."""
 
     def __init__(self, base_learner, random_state=None):
-        """__init__ for StreamHandler."""
+        """Initialize a StreamHandler."""
         self.learner = base_learner
         self.mf = SMF()
         self.hist_memb = None
 
     def fit(self, x, y, x1, y1, epochs=100, sample_weight=None):
-        """Fit method."""
+        """Fit the model."""
         self.learner.fit(x, y, sample_weight=sample_weight)
         yhat = self.learner.predict(x)
         loss = (yhat - y) ** 2
@@ -84,7 +84,7 @@ class StreamHandler:
         self.hist_memb = self.mf.membership(loss).detach().cpu().numpy()
 
     def partial_fit(self, x, y, x1, y1, epochs=100, sample_weight=None):
-        """Partial fit method."""
+        """Partial fit the model."""
         self.learner.partial_fit(x, y, sample_weight=sample_weight)
         yhat = self.learner.predict(x)
         loss = (yhat - y) ** 2
@@ -94,7 +94,7 @@ class StreamHandler:
         self.hist_memb = self.mf.membership(loss).detach().cpu().numpy()
 
     def score(self, x, y, return_memb=False):
-        """Score method.
+        """Make predictions and calculate scores.
 
         x: ndarray of size (n, d)
         y: ndarray of size (n,)

@@ -16,10 +16,7 @@ qmax = 0.875
 
 
 def generate_new_order(Q):
-    """Generate a new order.
-
-    Generate a new order based on Q table.
-    """
+    """Generate a new order based on Q table."""
     m, _ = Q.shape
     new_order = torch.zeros(m, dtype=torch.int64)
     chosen_list = [False for _ in range(m)]
@@ -40,10 +37,7 @@ def generate_new_order(Q):
 
 
 def update_Q(Q, order, rho=rho, q1=qmin, q2=qmax):
-    """Update Q.
-
-    Update Q table.
-    """
+    """Update Q table."""
     m, _ = Q.shape
     flags = torch.zeros((m, m))
     for i, sid in enumerate(order):
@@ -66,7 +60,7 @@ class EvolutionaryRegressorChain:
     """Evolutionary Regressor Chain."""
 
     def __init__(self, L, learners, Q, device=device):
-        """__init__ for EvolutionaryRegressorChain."""
+        """Initialize a EvolutionaryRegressorChain."""
         self.order = torch.randperm(L)
         self.learners = learners
         self.Q = Q
@@ -92,7 +86,7 @@ class EvolutionaryRegressorChain:
         return y_hat
 
     def step(self, x, y, lr=1e-4, weight_decay=1):
-        """Step method."""
+        """Update the model and return the predictions."""
         m, d = x.shape
         # predicting and calculate loss
         y_hat1 = self.predict(x)
@@ -135,10 +129,7 @@ class EvolutionaryRegressorChain:
 
 
 def pruning(y, nn, device=device):
-    """Choose nn chains from n.
-
-    nn must be not smaller than 2.
-    """
+    """Prune and decrease the number of chains."""
     n, m = y.shape
     diversity = torch.zeros((n, n), device=device)
     chosen_sid = torch.zeros(nn, dtype=torch.long, device=device) - 1
@@ -165,7 +156,7 @@ class EvolutionaryRegressorChains:
     """Evolutional Regressor Chains."""
 
     def __init__(self, n_chains, L, baselearner, device=device):
-        """__init__ for EvolutionalRegressorChains."""
+        """Initialize EvolutionalRegressorChains."""
         self.n_chains = n_chains
         self.learners = \
             [[baselearner(device=device) for _ in range(L)] for _ in range(L)]
@@ -178,7 +169,7 @@ class EvolutionaryRegressorChains:
                        for _ in range(n_chains)]
 
     def step(self, x, y, lr=1e-4, weight_decay=1, n_pruning=None):
-        """Step method."""
+        """Update the models and return the predictions."""
         m, d = x.shape
         y_hat = torch.zeros((self.n_chains, m), device=self.device)
         for i, chain in enumerate(self.chains):

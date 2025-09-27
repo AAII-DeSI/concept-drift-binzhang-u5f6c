@@ -18,7 +18,7 @@ class TrainStreams(Dataset):
     """Train dataset."""
 
     def __init__(self, device=device):
-        """__init__ for TrainStreams."""
+        """Initialize a TrainStreams object."""
         super(TrainStreams, self).__init__()
         df = pd.read_csv('data/multistream.central.csv')
         self.x = torch.zeros((373327, 8, 11), device=device)
@@ -40,19 +40,16 @@ class TrainStreams(Dataset):
         del df
 
     def __len__(self):
-        """Methods for emulating a container type."""
+        """Return the length."""
         return 373327
 
     def __getitem__(self, key):
-        """Methods for emulating a container type."""
+        """Return data with given index."""
         return self.x[key, :, :], self.y[key, :]
 
 
 class BaseLearnerTrain(nn.Module):
-    """Base learner for TrainStreams.
-
-    A simple linear model with embedding layers.
-    """
+    """A simple linear model with embedding layers."""
 
     def __init__(self, device=device):
         """Initialize a new base learner."""
@@ -74,7 +71,7 @@ class BaseLearnerTrain(nn.Module):
         self.to(device)
 
     def forward(self, x, y):
-        """Move forward."""
+        """Calculate forward."""
         if len(x.shape) == 1:
             x = x.view(1, -1)
         n, d = x.shape

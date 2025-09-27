@@ -12,6 +12,7 @@ The `EvolutionaryRegressorChains` class should be initialized with the following
 - the number of chains
 - the number of data streams
 - a base learner
+There is one method `step`, which conducts the adaptation and return the loss.
 
 **Example**
 
@@ -38,5 +39,6 @@ Please cite it as:
   volume={55},
   number={9},
   pages={4078-4088},
-  doi={10.1109/TCYB.2025.3587025}}
+  doi={10.1109/TCYB.2025.3587025}
+}
 ```
